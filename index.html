@@ -409,18 +409,11 @@
                     messages: [
                         {
                             role: "system",
-                            content: "You are an expert financial analyst. Provide detailed company analysis with current market position, financial metrics, and future outlook. Format the response with clear sections and bullet points for better readability."
+                            content: "You are a financial analyst. Give brief company analysis."
                         },
                         {
                             role: "user",
-                            content: `Analyze ${company} with the following structure:
-                            1. Company Overview
-                            2. Recent Performance
-                            3. Key Financial Metrics
-                            4. Market Position
-                            5. Future Outlook
-                            6. Risk Factors
-                            End with Stock Symbol: ${company}`
+                            content: `Analyze ${company}: Overview, Performance, Metrics, Market Position, Outlook. End with Symbol: ${company}`
                         }
                     ],
                     temperature: 0.7,
