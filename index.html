@@ -286,6 +286,24 @@
             ).join('');
         }
         updateTicker();
+
+        // Add search functionality
+        const searchBar = document.querySelector('.search-bar');
+        
+        searchBar.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const searchQuery = this.value.trim().toUpperCase();
+                if (searchQuery) {
+                    const url = `https://www.screener.in/company/${searchQuery}/consolidated/`;
+                    window.location.href = url;
+                }
+            }
+        });
+
+        // Optional: Add a loading state when searching
+        searchBar.addEventListener('input', function() {
+            this.style.backgroundColor = this.value ? '#fff' : '#f8faff';
+        });
     </script>
 </body>
 </html>
