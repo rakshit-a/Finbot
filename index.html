@@ -411,40 +411,42 @@
                     messages: [
                         {
                             role: "system",
-                            content: "You are a professional financial analyst providing detailed, data-driven research reports."
+                            content: "You are a financial analyst providing concise, data-driven stock analysis."
                         },
                         {
                             role: "user",
-                            content: `Act as a professional financial analyst. Provide a detailed, data-driven research report on the stock ${company} with the following sections:
+                            content: `Act as a financial analyst. Provide a concise analysis of ${company}, covering:
 
-Latest Results Overview
-• Summarize the most recent earnings report (date, revenue, EPS vs. estimates, key surprises)
-• Highlight management commentary on growth, risks, and guidance
+• Latest Earnings Results
+- Recent earnings date and key numbers
+- Revenue and EPS vs estimates
 
-Financial Overview
-• 3-year trends for revenue, net income, profit margins, and ROE/ROCE
-• Debt-to-equity ratio, liquidity ratios, and free cash flow analysis
-• Valuation metrics: P/E, PEG, P/S, and dividend yield vs. sector averages
+• Key Financial Metrics
+- Revenue growth and margins
+- P/E ratio and other valuations
+- Debt and liquidity ratios
 
-Technical Overview
-• Current price action (1M/3M/1Y performance) and key support/resistance levels
-• Analysis of RSI, MACD, moving averages (50-day, 200-day), and volume trends
-• Short-term and long-term technical outlook (bullish/bearish signals)
+• Technical Analysis
+- Current price and trends
+- RSI and key support/resistance
+- Moving averages status
 
-Sector & Industry Performance
-• Compare the stock's performance to its sector over 6 months
-• Highlight industry trends impacting the stock
+• Market Position
+- Sector performance comparison
+- Key competitors analysis
+- Market share trends
 
-Additional Key Details
-• Insider trading activity and institutional ownership changes
-• Recent news (M&A, partnerships, product launches)
-• Analyst consensus (price targets, upgrades/downgrades)
+• Investment Signals
+- Insider/institutional activity
+- Recent analyst ratings
+- Price targets
 
-Risks & Catalysts
-• Near-term risks (e.g., interest rates, competition)
-• Upcoming catalysts (e.g., FDA approvals, earnings dates)
+• Risks & Catalysts
+- Near-term risks
+- Upcoming events
+- Growth catalysts
 
-Please end with a summary of bullish/bearish arguments and include the Stock Symbol: ${company}`
+End with Stock Symbol: ${company}`
                         }
                     ]
                 })
@@ -463,10 +465,10 @@ Please end with a summary of bullish/bearish arguments and include the Stock Sym
             // Enhanced formatting for the new structure
             const formattedContent = content
                 .replace(/\n\n/g, '<br><br>')
-                .replace(/([A-Za-z& ]+Overview|Additional Key Details|Risks & Catalysts):/g, '<h3 style="color: var(--primary); margin-top: 20px; border-bottom: 2px solid var(--primary); padding-bottom: 5px;">$1</h3>')
-                .replace(/•\s/g, '<br>• ')
+                .replace(/•\s([^:]+):/g, '<h3 style="color: var(--primary); margin-top: 20px; border-bottom: 2px solid var(--primary); padding-bottom: 5px;">$1</h3>')
+                .replace(/-\s/g, '<br>• ')
                 .replace(/Stock Symbol:/g, '<br><br><strong style="color: var(--secondary); font-size: 1.2em;">Stock Symbol:</strong>')
-                .replace(/(Bullish Arguments|Bearish Arguments):/g, '<br><strong style="color: var(--primary)">$1:</strong>');
+                .replace(/(Bullish|Bearish):/g, '<br><strong style="color: var(--primary)">$1:</strong>');
             
             resultContent.innerHTML = formattedContent;
             
