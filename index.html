@@ -355,7 +355,6 @@
         <div class="search-results-content" id="searchResultsContent"></div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/openai@4.0.0/dist/openai.min.js"></script>
     <script>
         // Stock Ticker Data
         const stocks = [
@@ -374,16 +373,6 @@
             ).join('');
         }
         updateTicker();
-
-        // Initialize OpenAI with OpenRouter configuration
-        const openai = new OpenAI({
-            baseURL: "https://openrouter.ai/api/v1",
-            apiKey: "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",
-            defaultHeaders: {
-                "HTTP-Referer": "https://finbot.com",
-                "X-Title": "Finbot Investment Dashboard",
-            }
-        });
 
         // Update the search functionality
         const searchBar = document.querySelector('.search-bar');
