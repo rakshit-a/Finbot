@@ -17,6 +17,25 @@
             padding: 20px;
         }
 
+        .ticker {
+            background: #1a237e;
+            color: white;
+            padding: 10px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            margin-bottom: 20px;
+        }
+
+        .ticker-content {
+            display: inline-block;
+            animation: ticker 30s linear infinite;
+        }
+
+        .stock-item {
+            display: inline-block;
+            margin: 0 40px;
+        }
+
         .card {
             background: white;
             border-radius: 10px;
@@ -48,69 +67,65 @@
             border-radius: 8px;
         }
 
-        .metric-item h3 {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 8px;
+        .stocks-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
         }
 
-        .metric-item p {
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .stocks-list {
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
             margin: 20px 0;
         }
 
-        .stock-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid #eee;
-        }
-
-        .stock-header {
-            font-weight: bold;
-            color: #666;
-            margin-bottom: 15px;
-        }
-
-        .timeline-tabs {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .tab-item {
-            color: #666;
-            cursor: pointer;
-        }
-
-        .news-item {
+        .radio-group {
             margin: 15px 0;
-            padding: 10px;
-            border-left: 3px solid #2962ff;
         }
 
-        .pro-badge {
-            background: #2962ff;
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
+        .radio-group label {
+            display: block;
+            margin: 10px 0;
+        }
+
+        .plan-info {
+            text-align: center;
+            color: #666;
+            margin: 20px 0;
+        }
+
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
         }
     </style>
 </head>
 <body>
-    <!-- Search Section -->
-    <div class="card">
-        <h1>Good morning, Deven!</h1>
-        <p>Welcome to Finbot! Search for any company to get detailed insights for investing.</p>
-        <input type="text" class="search-bar" placeholder="Search for a company">
+    <!-- Stock Ticker -->
+    <div class="ticker">
+        <div class="ticker-content" id="ticker"></div>
     </div>
 
-    <!-- Market Overview -->
+    <!-- Profile Section -->
+    <div class="card">
+        <h1>Good morning, Deven!</h1>
+        <p>Complete your profile to collect your first badge!</p>
+        <div class="stocks-grid">
+            <div>
+                <input type="text" class="search-bar" placeholder="Search for a company">
+                <p>Welcome to Finbot! Search for any company to get detailed insights for investing.</p>
+            </div>
+            <div class="radio-group">
+                <h3>Market View</h3>
+                <label><input type="radio" name="view"> Bullish</label>
+                <label><input type="radio" name="view"> Bearish</label>
+                <label><input type="radio" name="view"> Neutral</label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Market Metrics -->
     <div class="card">
         <h2>Overall Market</h2>
         <div class="market-metrics">
@@ -126,73 +141,51 @@
                 <h3>Stock Traded</h3>
                 <p>4273</p>
             </div>
+        </div>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="card">
+        <div class="stats-grid">
             <div class="metric-item">
-                <h3>Advances</h3>
-                <p>2247</p>
+                <h3>Stocks Researched</h3>
+                <p>0</p>
             </div>
             <div class="metric-item">
-                <h3>Declines</h3>
-                <p>1955</p>
+                <h3>Screens Created</h3>
+                <p>0</p>
+            </div>
+            <div class="metric-item">
+                <h3>Watchlisted Stocks</h3>
+                <p>0</p>
             </div>
         </div>
     </div>
 
-    <!-- Top Gainers/Losers -->
-    <div class="card">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-            <div>
-                <h3>Top Gainers</h3>
-                <div class="stocks-list">
-                    <div class="stock-item">
-                        <div>DMART<br><small>Avenue Supermart Ltd</small></div>
-                        <div>4016.45 <span style="color:green">▲ 9.59%</span></div>
-                    </div>
-                    <!-- Add more gainers -->
-                </div>
-            </div>
-            <div>
-                <h3>Top Losers</h3>
-                <div class="stocks-list">
-                    <div class="stock-item">
-                        <div>IRFC<br><small>Indian Railway Finance</small></div>
-                        <div>141.35 <span style="color:red">▼ 6.36%</span></div>
-                    </div>
-                    <!-- Add more losers -->
-                </div>
-            </div>
-        </div>
+    <!-- Plan Info -->
+    <div class="plan-info">
+        You're enjoying standard plan<br>
+        <a href="#" style="color: #2962ff; text-decoration: none;">Upgrade to premium →</a>
     </div>
 
-    <!-- Timeline Section -->
-    <div class="card">
-        <div class="timeline-tabs">
-            <div class="tab-item">Top Stories</div>
-            <div class="tab-item">My Watchlist</div>
-            <div class="tab-item">My Portfolio</div>
-        </div>
+    <script>
+        // Stock Ticker Data
+        const stocks = [
+            'RELIANCE: ₹2,856.15 ▲1.2%',
+            'TCS: ₹3,415.50 ▼0.8%',
+            'HDFCBANK: ₹1,645.30 ▲0.5%',
+            'INFY: ₹1,530.80 ▲2.1%',
+            'SBIN: ₹595.45 ▼1.1%',
+            'TATAMOTORS: ₹985.60 ▲3.2%'
+        ];
 
-        <div class="news-item">
-            <div style="display: flex; justify-content: space-between;">
-                <span>CNN News18 • 1h ago</span>
-                <span class="pro-badge">Pro</span>
-            </div>
-            <h4>Makakunnis 2025: Where Faith Meets Business</h4>
-            <p>Spiritual tourism industry transforming Portugal into global hub...</p>
-        </div>
-
-        <!-- Add more news items -->
-    </div>
-
-    <!-- Watchlist Section -->
-    <div class="card">
-        <h3>Stocks to Watch <span class="pro-badge">Pro</span></h3>
-        <div class="stocks-list">
-            <div class="stock-item">
-                <div>NETWEB<br><small>₹72900.00</small></div>
-                <span style="color:green">▲ 2.21%</span>
-            </div>
-            <!-- Add more watchlist items -->
-        </div>
-    </div>
+        function updateTicker() {
+            const ticker = document.getElementById('ticker');
+            ticker.innerHTML = stocks.map(stock => 
+                `<div class="stock-item">${stock}</div>`
+            ).join('');
+        }
+        updateTicker();
+    </script>
 </body>
 </html>
