@@ -398,27 +398,39 @@
         });
 
         async function getCompanyAnalysis(company) {
-            const response = await fetch('https://api.deepseek.com/chat/completions', {
+            const response = await fetch('https://api.aimlapi.com/v1/chat/completions', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer YOUR_DEEPSEEK_API_KEY'
+                    'Authorization': 'Bearer d9d124a38d1844069fbe4c38deff4dab'
                 },
                 body: JSON.stringify({
-                    model: "deepseek-chat",
+                    model: "mistralai/Mistral-7B-Instruct-v0.2",
                     messages: [
                         {
                             role: "system",
-                            content: "You are a financial analyst. Provide a detailed analysis of the company mentioned by the user. Include key metrics, recent performance, and market position."
+                            content: "You are an expert financial analyst. Provide detailed company analysis with current market position, financial metrics, and future outlook. Format the response with clear sections and bullet points for better readability."
                         },
                         {
                             role: "user",
-                            content: `Provide a detailed analysis of ${company}. Include recent performance, key financial metrics, market position, and future outlook. End the analysis by mentioning the stock symbol: ${company}`
+                            content: `Analyze ${company} with the following structure:
+                            1. Company Overview
+                            2. Recent Performance
+                            3. Key Financial Metrics
+                            4. Market Position
+                            5. Future Outlook
+                            6. Risk Factors
+                            End with Stock Symbol: ${company}`
                         }
                     ],
-                    stream: false
+                    temperature: 0.7,
+                    max_tokens: 1000
                 })
             });
+
+            if (!response.ok) {
+                throw new Error(`API call failed: ${response.status}`);
+            }
 
             const data = await response.json();
             return data.choices[0].message.content;
@@ -426,7 +438,14 @@
 
         function displayResults(content) {
             const resultContent = document.getElementById('searchResultsContent');
-            resultContent.innerHTML = content.replace(/\n/g, '<br>');
+            // Format the content with better styling
+            const formattedContent = content
+                .replace(/\n\n/g, '<br><br>')
+                .replace(/\d\.\s([^:]+):/g, '<h3 style="color: var(--primary); margin-top: 20px;">$1</h3>')
+                .replace(/•\s/g, '<br>• ')
+                .replace(/Stock Symbol:/g, '<br><br><strong style="color: var(--secondary)">Stock Symbol:</strong>');
+            
+            resultContent.innerHTML = formattedContent;
             
             overlay.classList.add('active');
             searchResults.classList.add('active');
