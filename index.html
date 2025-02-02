@@ -15,31 +15,6 @@
         body {
             background-color: #f5f5f5;
             padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-        }
-
-        .ticker {
-            background: #1a237e;
-            color: white;
-            padding: 10px 0;
-            overflow: hidden;
-            white-space: nowrap;
-            margin-bottom: 20px;
-            width: 100%;
-        }
-
-        .ticker-content {
-            display: inline-block;
-            animation: ticker 30s linear infinite;
-        }
-
-        .stock-item {
-            display: inline-block;
-            margin: 0 40px;
         }
 
         .card {
@@ -48,25 +23,6 @@
             padding: 20px;
             margin-bottom: 20px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 600px;
-            text-align: center;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            margin: 20px 0;
-            width: 100%;
-            max-width: 600px;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 8px;
         }
 
         .search-bar {
@@ -78,125 +34,165 @@
             margin: 20px 0;
         }
 
-        .welcome-text {
-            text-align: center;
+        .market-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
             margin: 20px 0;
-            font-size: 18px;
-            color: #555;
-            max-width: 600px;
         }
 
-        .nav-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: white;
-            display: flex;
-            justify-content: space-around;
-            padding: 15px 0;
-            box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
-        }
-
-        .nav-item {
+        .metric-item {
             text-align: center;
-            color: #666;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
         }
 
-        @keyframes ticker {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
+        .metric-item h3 {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .metric-item p {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .stocks-list {
+            margin: 20px 0;
+        }
+
+        .stock-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .stock-header {
+            font-weight: bold;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .timeline-tabs {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .tab-item {
+            color: #666;
+            cursor: pointer;
+        }
+
+        .news-item {
+            margin: 15px 0;
+            padding: 10px;
+            border-left: 3px solid #2962ff;
+        }
+
+        .pro-badge {
+            background: #2962ff;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
         }
     </style>
 </head>
 <body>
-    <div class="ticker">
-        <div class="ticker-content" id="ticker"></div>
-    </div>
-
+    <!-- Search Section -->
     <div class="card">
         <h1>Good morning, Deven!</h1>
-        <p>Complete your profile to collect your first badge!</p>
-    </div>
-
-    <div class="welcome-text">
-        Welcome to the Finbot! Just search for the company you like, and we will provide you with everything you need to know about that company to start investing. You don't need a big research firm or hours for that—just click on search and go!
-    </div>
-
-    <div class="card">
+        <p>Welcome to Finbot! Search for any company to get detailed insights for investing.</p>
         <input type="text" class="search-bar" placeholder="Search for a company">
     </div>
 
-    <div class="stats-grid">
-        <div class="stat-item">
-            <h3>Stocks Researched</h3>
-            <p>0</p>
-        </div>
-        <div class="stat-item">
-            <h3>Screens Created</h3>
-            <p>0</p>
-        </div>
-        <div class="stat-item">
-            <h3>Watchlisted Stocks</h3>
-            <p>0</p>
-        </div>
-        <div class="stat-item">
-            <h3>Stories Read</h3>
-            <p>0</p>
+    <!-- Market Overview -->
+    <div class="card">
+        <h2>Overall Market</h2>
+        <div class="market-metrics">
+            <div class="metric-item">
+                <h3>NIFTY</h3>
+                <p>23,482.15 <span style="color:green">▲ 0.11%</span></p>
+            </div>
+            <div class="metric-item">
+                <h3>SENSEX</h3>
+                <p>77,505.96 <span style="color:green">△ 0.01%</span></p>
+            </div>
+            <div class="metric-item">
+                <h3>Stock Traded</h3>
+                <p>4273</p>
+            </div>
+            <div class="metric-item">
+                <h3>Advances</h3>
+                <p>2247</p>
+            </div>
+            <div class="metric-item">
+                <h3>Declines</h3>
+                <p>1955</p>
+            </div>
         </div>
     </div>
 
-    <div class="nav-bar">
-        <div class="nav-item">🏠 Home</div>
-        <div class="nav-item">📈 Market</div>
-        <div class="nav-item">🎙️ Podcast</div>
-        <div class="nav-item">🔍 Discovery</div>
-        <div class="nav-item">⏳ Timeline</div>
+    <!-- Top Gainers/Losers -->
+    <div class="card">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div>
+                <h3>Top Gainers</h3>
+                <div class="stocks-list">
+                    <div class="stock-item">
+                        <div>DMART<br><small>Avenue Supermart Ltd</small></div>
+                        <div>4016.45 <span style="color:green">▲ 9.59%</span></div>
+                    </div>
+                    <!-- Add more gainers -->
+                </div>
+            </div>
+            <div>
+                <h3>Top Losers</h3>
+                <div class="stocks-list">
+                    <div class="stock-item">
+                        <div>IRFC<br><small>Indian Railway Finance</small></div>
+                        <div>141.35 <span style="color:red">▼ 6.36%</span></div>
+                    </div>
+                    <!-- Add more losers -->
+                </div>
+            </div>
+        </div>
     </div>
 
-    <script>
-        // Indian stock ticker symbols
-        const stocks = [
-            'RELIANCE: ₹2,856.15 ▲1.2%',
-            'TCS: ₹3,415.50 ▼0.8%',
-            'HDFCBANK: ₹1,645.30 ▲0.5%',
-            'INFY: ₹1,530.80 ▲2.1%',
-            'SBIN: ₹595.45 ▼1.1%',
-            'TATAMOTORS: ₹985.60 ▲3.2%',
-            'LT: ₹3,245.00 ▼0.4%',
-            'AXISBANK: ₹1,098.25 ▲1.8%',
-            'HINDUNILVR: ₹2,650.00 ▲0.9%',
-            'ITC: ₹230.45 ▼0.3%',
-            'KOTAKBANK: ₹1,950.60 ▲1.5%',
-            'ICICIBANK: ₹920.75 ▼0.7%',
-            'BAJFINANCE: ₹7,450.00 ▲2.3%',
-            'ASIANPAINT: ₹3,200.50 ▼0.6%',
-            'MARUTI: ₹9,100.00 ▲1.1%',
-            'ONGC: ₹180.90 ▼0.9%'
-        ];
+    <!-- Timeline Section -->
+    <div class="card">
+        <div class="timeline-tabs">
+            <div class="tab-item">Top Stories</div>
+            <div class="tab-item">My Watchlist</div>
+            <div class="tab-item">My Portfolio</div>
+        </div>
 
-        function updateTicker() {
-            const ticker = document.getElementById('ticker');
-            ticker.innerHTML = stocks.map(stock => 
-                `<div class="stock-item">${stock}</div>`
-            ).join('');
-            
-            // Random price updates every 5 seconds
-            setInterval(() => {
-                stocks.forEach((stock, index) => {
-                    const priceChange = (Math.random() * 2 - 1).toFixed(1);
-                    const newPrice = (Math.random() * 5000 + 500).toFixed(2);
-                    const arrow = priceChange >= 0 ? '▲' : '▼';
-                    stocks[index] = `${stock.split(':')[0]}: ₹${newPrice} ${arrow}${Math.abs(priceChange)}%`;
-                });
-                ticker.innerHTML = stocks.map(stock => 
-                    `<div class="stock-item">${stock}</div>`
-                ).join('');
-            }, 5000);
-        }
+        <div class="news-item">
+            <div style="display: flex; justify-content: space-between;">
+                <span>CNN News18 • 1h ago</span>
+                <span class="pro-badge">Pro</span>
+            </div>
+            <h4>Makakunnis 2025: Where Faith Meets Business</h4>
+            <p>Spiritual tourism industry transforming Portugal into global hub...</p>
+        </div>
 
-        // Start ticker immediately
-        updateTicker();
-    </script>
+        <!-- Add more news items -->
+    </div>
+
+    <!-- Watchlist Section -->
+    <div class="card">
+        <h3>Stocks to Watch <span class="pro-badge">Pro</span></h3>
+        <div class="stocks-list">
+            <div class="stock-item">
+                <div>NETWEB<br><small>₹72900.00</small></div>
+                <span style="color:green">▲ 2.21%</span>
+            </div>
+            <!-- Add more watchlist items -->
+        </div>
+    </div>
 </body>
 </html>
