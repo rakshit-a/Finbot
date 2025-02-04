@@ -650,6 +650,89 @@
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(255, 51, 153, 0.3);
         }
+
+        /* Styles for the research report */
+        .report-title {
+            color: var(--chart-pink);
+            font-size: 1.8em;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .report-section {
+            margin: 25px 0;
+        }
+
+        .section-title {
+            color: var(--chart-pink);
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .data-point {
+            background: rgba(20, 20, 30, 0.7);
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 3px solid var(--chart-pink);
+        }
+
+        .sub-section {
+            margin: 15px 0;
+        }
+
+        .sub-title {
+            color: var(--chart-pink);
+            font-size: 1.1em;
+            font-weight: 600;
+            margin: 15px 0 10px 0;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 51, 153, 0.1);
+        }
+
+        .metric-label {
+            color: var(--text-light);
+        }
+
+        .metric-value {
+            color: var(--chart-pink);
+            font-weight: 600;
+        }
+
+        .bullet-point {
+            padding-left: 20px;
+            position: relative;
+            margin: 8px 0;
+        }
+
+        .bullet-point:before {
+            content: "•";
+            color: var(--chart-pink);
+            position: absolute;
+            left: 0;
+        }
+
+        .symbol-tag {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
     </style> 
 </head>
 <body>
@@ -797,7 +880,7 @@
                     "X-Title": "Finbot Investment Dashboard"
                 },
                 body: JSON.stringify({
-                    "model": "google/gemini-2.0-flash-thinking-exp:free",
+                    "model": "sophosympatheia/rogue-rose-103b-v0.2:free",
                     "messages": [
                         {
                             "role": "system",
@@ -856,28 +939,49 @@ End with Symbol: ${company}`
 
         function displayResults(content) {
             const resultContent = document.getElementById('searchResultsContent');
-            const formattedContent = content
-                // Remove extra asterisks
-                .replace(/\*\*/g, '')
-                // Format section headers
-                .replace(/^#\s*(.*?)$/gm, '<div class="section-header">$1</div>')
-                // Format sub-headers
-                .replace(/^([0-9]+\.\s.*?)$/gm, '<div class="sub-section">$1</div>')
-                // Format bullet points with colons
-                .replace(/^\*\s*(.*?):\s*(.*?)$/gm, '<div class="data-point"><span class="bullet">•</span><strong>$1:</strong> $2</div>')
-                // Format regular bullet points
-                .replace(/^\*\s*(.*?)$/gm, '<div class="data-point"><span class="bullet">•</span>$1</div>')
-                // Format source references
-                .replace(/\[Source:.*?\]/g, '<div class="source-ref">$&</div>')
-                // Format numbers and percentages
-                .replace(/([₹\$][\d,\.]+(?:\scrore)?)/g, '<span class="number">$1</span>')
-                .replace(/(\d+(?:\.\d+)?%)/g, '<span class="number">$1</span>')
-                // Format the final symbol
-                .replace(/Symbol:\s*(.*?)$/g, '<div class="symbol-tag">Symbol: $1</div>');
+            
+            // Split the content into sections
+            const sections = content.split('\n\n');
+            
+            let formattedContent = `<div class="report-title">${sections[0]}</div>`;
+            
+            // Process each section
+            for(let i = 1; i < sections.length; i++) {
+                const section = sections[i];
+                if(section.trim()) {
+                    if(section.startsWith('Symbol:')) {
+                        formattedContent += `<div class="symbol-tag">${section}</div>`;
+                    } else {
+                        const [sectionTitle, ...sectionContent] = section.split('\n');
+                        formattedContent += `
+                            <div class="report-section">
+                                <div class="section-title">${sectionTitle}</div>
+                                ${formatSectionContent(sectionContent.join('\n'))}
+                            </div>
+                        `;
+                    }
+                }
+            }
             
             resultContent.innerHTML = formattedContent;
+            
+            // Show the modal
             overlay.classList.add('active');
             searchResults.classList.add('active');
+        }
+
+        function formatSectionContent(content) {
+            return content
+                // Format bullet points
+                .replace(/\*\s(.*?):/g, '<div class="sub-title">$1:</div>')
+                .replace(/\*\s(.*)/g, '<div class="bullet-point">$1</div>')
+                // Format metrics
+                .replace(/([^:]+):\s*([\d.]+[%x]?)/g, '<div class="metric"><span class="metric-label">$1</span><span class="metric-value">$2</span></div>')
+                // Format sub-sections with +
+                .replace(/\t\+\s(.*)/g, '<div class="bullet-point">$1</div>')
+                // Format numbers and percentages
+                .replace(/(\d+(?:\.\d+)?%)/g, '<span class="metric-value">$1</span>')
+                .replace(/([₹\$][\d,\.]+(?:\scrore)?)/g, '<span class="metric-value">$1</span>');
         }
 
         function closeResults() {
