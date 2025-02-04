@@ -92,6 +92,7 @@
             border-radius: 30px;
             box-shadow: var(--glow);
             transition: all 0.3s ease;
+            display: block;
         }
 
         .search-bar:focus {
@@ -572,6 +573,46 @@
         .search-section {
             text-align: center;
             padding: 40px 20px;
+        }
+
+        /* Update greeting styles and position */
+        h1 {
+            color: var(--chart-pink) !important;
+            font-size: 2em;
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(255, 51, 153, 0.3);
+            text-align: left;
+            padding-left: 40px;
+            margin-bottom: 40px;
+        }
+
+        /* Center welcome text */
+        .welcome-text {
+            color: var(--chart-pink);
+            font-size: 1.4em;
+            font-weight: 500;
+            line-height: 1.5;
+            text-shadow: 0 0 10px rgba(255, 51, 153, 0.2);
+            max-width: 800px;
+            margin: 0 auto 25px auto;
+            text-align: center;
+        }
+
+        /* Layout container */
+        .search-section {
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        /* Card styling */
+        .card {
+            background: rgba(20, 20, 30, 0.7);
+            border: 1px solid var(--border);
+            box-shadow: var(--glow);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
         }
     </style> 
 </head>
