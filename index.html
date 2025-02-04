@@ -82,17 +82,23 @@
         }
 
         .search-bar {
+            width: 80%;
+            padding: 20px 30px;
+            font-size: 1.2em;
+            margin: 30px auto;
             background: rgba(20, 20, 30, 0.7);
             border: 2px solid var(--border);
             color: var(--text);
-            padding: 15px 25px;
-            border-radius: 25px;
+            border-radius: 30px;
             box-shadow: var(--glow);
+            transition: all 0.3s ease;
         }
 
         .search-bar:focus {
+            width: 85%;
             border-color: var(--primary);
-            box-shadow: 0 0 30px rgba(255, 51, 153, 0.3);
+            box-shadow: 0 0 40px rgba(255, 51, 153, 0.3);
+            outline: none;
         }
 
         .market-metrics {
@@ -550,7 +556,24 @@
         .greeting:hover, .market-view:hover {
             text-shadow: 0 0 15px rgba(255, 51, 153, 0.5);
         }
-    </style>
+
+        /* Style for the new welcome text */
+        .welcome-text {
+            color: var(--chart-pink);
+            font-size: 1.4em;
+            font-weight: 500;
+            margin-bottom: 25px;
+            line-height: 1.5;
+            text-shadow: 0 0 10px rgba(255, 51, 153, 0.2);
+            max-width: 800px;
+        }
+
+        /* Center the search section */
+        .search-section {
+            text-align: center;
+            padding: 40px 20px;
+        }
+    </style> 
 </head>
 <body>
     <!-- Stock Ticker -->
@@ -560,21 +583,10 @@
 
     <!-- Profile Section -->
     <div class="card">
-        <h1>Good morning, Deven! 👋</h1>
-        <div class="badge-progress">
-            <p>Complete your profile to collect your first badge! 🏆</p>
-        </div>
-        <div class="stocks-grid">
-            <div>
-                <input type="text" class="search-bar" placeholder="🔍 Search for a company">
-                <p class="welcome-message">Welcome to Finbot! Search for any company to get detailed insights for investing.</p>
-            </div>
-            <div class="radio-group">
-                <h3>Market View</h3>
-                <label><input type="radio" name="view"> 📈 Bullish</label>
-                <label><input type="radio" name="view"> 📉 Bearish</label>
-                <label><input type="radio" name="view"> 📊 Neutral</label>
-            </div>
+        <div class="search-section">
+            <h1>Good morning, Deven! 👋</h1>
+            <p class="welcome-text">Enter a stock's name to unlock instant insights—real-time charts, key metrics, and the latest news await to fuel your investing decisions.</p>
+            <input type="text" class="search-bar" placeholder="Search for a company...">
         </div>
     </div>
 
